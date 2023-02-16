@@ -16,6 +16,7 @@ require("nvim-tree").setup({
   view = {
     side = "right",
     adaptive_size = true,
+    relativenumber = true,
     mappings = {
       list = {
         { key = "u", action = "dir_up" },
@@ -23,7 +24,8 @@ require("nvim-tree").setup({
     },
   },
   git = {
-      enable = true
+      enable = true,
+      ignore = false,
   },
   renderer = {
     group_empty = true,

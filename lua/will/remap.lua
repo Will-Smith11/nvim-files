@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>t", function()  vim.cmd("FloatermToggle") end)
-vim.keymap.set("n", "<leader>pv", function () vim.cmd("NvimTreeToggle") end)
+vim.keymap.set("n", "<leader>t", function() vim.cmd("FloatermToggle") end)
+vim.keymap.set("n", "<leader>pv", function() vim.cmd("NvimTreeToggle") end)
 
 -- remap copilot
 vim.g.copilot_no_tab_map = true
@@ -19,21 +19,19 @@ vim.keymap.set("v", "<leader>q", "\"+p")
 vim.keymap.set("n", "<leader>q", "\"+p")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
+    vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Enable underline, use default values
     underline = true,
     -- Enable virtual text, override spacing to 4
     virtual_text = {
-      spacing = 4,
+        spacing = 4,
     },
     -- Use a function to dynamically turn signs off
     -- and on, using buffer local variables
     signs = function(namespace, bufnr)
-      return vim.b[bufnr].show_signs == true
+        return vim.b[bufnr].show_signs == true
     end,
     -- Disable a feature
     update_in_insert = false,
-  }
+}
 )
-
-

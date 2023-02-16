@@ -4,6 +4,21 @@ lsp.preset('recommended')
 
 lsp.ensure_installed({ 'rust_analyzer' })
 
+lsp.setup({
+    rust_analyzer = {
+
+        settings = {
+            ["rust-analyzer"] = {
+                checkOnSave = {
+                    command = "clippy"
+                },
+                procMacro = {
+                    enable = true,
+                },
+            },
+        },
+    },
+})
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
