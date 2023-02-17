@@ -175,15 +175,15 @@ _G.packer_plugins = {
     path = "/home/will/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
-  playground = {
-    loaded = true,
-    path = "/home/will/.local/share/nvim/site/pack/packer/start/playground",
-    url = "https://github.com/nvim-treesitter/playground"
-  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/will/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["spelunker.vim"] = {
+    loaded = true,
+    path = "/home/will/.local/share/nvim/site/pack/packer/start/spelunker.vim",
+    url = "https://github.com/kamykn/spelunker.vim"
   },
   ["telescope.nvim"] = {
     loaded = true,
