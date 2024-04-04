@@ -7,9 +7,15 @@ lsp.ensure_installed({ 'rust_analyzer' })
 lsp.setup({
   rust_analyzer = {
     settings = {
-          ["rust-analyzer"] = {
+      ["rust-analyzer"] = {
         checkOnSave = {
           command = "clippy"
+        },
+        cargo = {
+          features = "all",
+          buildScripts = {
+            enable = true,
+          },
         },
         procMacro = {
           enable = true,
@@ -31,10 +37,10 @@ require('lspconfig').eslint.setup({
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
-      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ["<C-Space>"] = cmp.mapping.complete(),
+  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  ["<C-Space>"] = cmp.mapping.complete(),
 })
 
 vim.diagnostic.config({
