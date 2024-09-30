@@ -24,20 +24,15 @@ require("nvim-tree").setup({
     },
   },
   git = {
-      enable = true,
-      ignore = true,
+    enable = true,
   },
   renderer = {
     group_empty = true,
     highlight_git = true,
     icons = {
-        show = {
-            git = true
-        }
+      show = {
+        git = true
+      }
     }
   },
-  filters = {
-    dotfiles = true,
-  },
 })
-

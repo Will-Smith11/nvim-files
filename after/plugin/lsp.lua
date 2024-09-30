@@ -12,7 +12,6 @@ lsp.setup({
           command = "clippy"
         },
         cargo = {
-          features = "all",
           buildScripts = {
             enable = true,
           },
