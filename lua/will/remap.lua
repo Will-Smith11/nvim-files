@@ -3,7 +3,7 @@ vim.keymap.set("n", "<leader>t", function() vim.cmd("FloatermToggle") end)
 vim.keymap.set("n", "<leader>pv", function() vim.cmd("NvimTreeToggle") end)
 
 -- hop
-vim.keymap.set("n", "<leader>sc", function() vim.cmd("HopChar2") end)
+vim.keymap.set("n", "<leader>ss", function() vim.cmd("HopChar2") end)
 
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
