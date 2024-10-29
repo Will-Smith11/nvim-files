@@ -6,21 +6,21 @@ lsp.ensure_installed({ 'rust_analyzer' })
 
 lsp.setup({
   rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy"
-        },
-        cargo = {
-          buildScripts = {
-            enable = true,
-          },
-        },
-        procMacro = {
-          enable = true,
-        },
-      },
-    },
+    -- settings = {
+    --   ["rust-analyzer"] = {
+    --     checkOnSave = {
+    --       command = "clippy"
+    --     },
+    --     cargo = {
+    --       buildScripts = {
+    --         enable = true,
+    --       },
+    --     },
+    --     procMacro = {
+    --       enable = true,
+    --     },
+    --   },
+    -- },
   },
 })
 
