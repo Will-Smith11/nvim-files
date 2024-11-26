@@ -1,46 +1,22 @@
 local lsp = require('lsp-zero')
 
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  -- Replace the language servers listed here
+  -- with the ones you want to install
+  ensure_installed = { 'lua_ls', 'rust_analyzer' },
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
+  }
+})
+
 lsp.preset('recommended')
 
-lsp.ensure_installed({ 'rust_analyzer' })
 
-lsp.setup({
-  rust_analyzer = {
-    -- settings = {
-    --   ["rust-analyzer"] = {
-    --     checkOnSave = {
-    --       command = "clippy"
-    --     },
-    --     cargo = {
-    --       buildScripts = {
-    --         enable = true,
-    --       },
-    --     },
-    --     procMacro = {
-    --       enable = true,
-    --     },
-    --   },
-    -- },
-  },
-})
-
-
-require('lspconfig').eslint.setup({
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
-  end,
-})
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-})
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -51,8 +27,21 @@ vim.diagnostic.config({
   float = true,
 })
 
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local lsp_format_on_save = function(bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = augroup,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format()
+    end,
+  })
+end
+
 
 lsp.on_attach(function(client, bufnr)
+  lsp_format_on_save(bufnr)
   local opts = { buffer = bufnr, remap = false }
   vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
