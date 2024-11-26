@@ -56,7 +56,9 @@ lspconfig.rust_analyzer.setup {
   },
 }
 
+
 local cmp = require("cmp")
+require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
   snippet = {
@@ -77,7 +79,9 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
   },
   sources = cmp.config.sources({
-    { name = 'luasnip' }
+    { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'path' },
   }, { { name = 'buffer' } })
 })
 
@@ -102,7 +106,6 @@ local lsp_format_on_save = function(bufnr)
   })
 end
 
-
 lsp.on_attach(function(client, bufnr)
   lsp_format_on_save(bufnr)
   local opts = { buffer = bufnr, remap = false }
@@ -119,7 +122,3 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
-
-lsp.setup()
-lsp.setup()
-lsp.setup()
