@@ -14,6 +14,46 @@ require('mason-lspconfig').setup({
 
 lsp.preset('recommended')
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
+
+
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then
+      return
+    end
+    return default_diagnostic_handler(err, result, context, config)
+  end
+end
+
+lspconfig.rust_analyzer.setup {
+  settings = {
+    ['rust-analyzer'] = {
+      workspace = {
+        symbol = {
+          search = {
+            limit = 3000
+          }
+        }
+      },
+      procMacro = {
+        enable = true
+      },
+      diagnostics = {
+        enable = true,
+        disabled = { "unresolved-proc-macro" },
+        enableExperimental = true,
+        refreshSupport = false,
+      },
+
+    },
+
+  },
+}
+
+
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
