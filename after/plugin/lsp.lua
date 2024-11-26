@@ -12,9 +12,9 @@ require('mason-lspconfig').setup({
   }
 })
 
+
 lsp.preset('recommended')
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 
 
@@ -28,7 +28,10 @@ for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) d
   end
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 lspconfig.rust_analyzer.setup {
+  capabilities = capabilities,
   settings = {
     ['rust-analyzer'] = {
       workspace = {
@@ -53,10 +56,30 @@ lspconfig.rust_analyzer.setup {
   },
 }
 
-
-
 local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
+  },
+  mapping = {
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+    ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = 'luasnip' }
+  }, { { name = 'buffer' } })
+})
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -85,6 +108,8 @@ lsp.on_attach(function(client, bufnr)
   local opts = { buffer = bufnr, remap = false }
   vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "<leader>gi", function() vim.lsp.buf.implementation() end, opts)
+  vim.keymap.set("n", "<leader>gr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
@@ -95,4 +120,6 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+lsp.setup()
+lsp.setup()
 lsp.setup()

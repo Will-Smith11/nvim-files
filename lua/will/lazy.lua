@@ -30,11 +30,11 @@ require("lazy").setup({
     "VonHeikemen/lsp-zero.nvim",
     lazy = false,
     dependencies = {
-      { 'neovim/nvim-lspconfig' },
+      { 'neovim/nvim-lspconfig',             lazy = false },
       { 'williamboman/mason.nvim',           lazy = false },
       { 'williamboman/mason-lspconfig.nvim', lazy = false },
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/nvim-cmp',                  lazy = false },
       { 'hrsh7th/cmp-buffer',                lazy = false },
       { 'hrsh7th/cmp-path',                  lazy = false },
       { 'saadparwaiz1/cmp_luasnip',          lazy = false },
@@ -45,7 +45,6 @@ require("lazy").setup({
       { 'L3MON4D3/LuaSnip',                  lazy = false },
       { 'rafamadriz/friendly-snippets',      lazy = false },
     }
-
   },
   {
     'phaazon/hop.nvim',
