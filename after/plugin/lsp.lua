@@ -17,6 +17,19 @@ lsp.preset('recommended')
 
 local lspconfig = require('lspconfig')
 
+local configs = require 'lspconfig.configs'
+
+configs.solidity = {
+  default_config = {
+    cmd = {'nomicfoundation-solidity-language-server', '--stdio'},
+    filetypes = { 'solidity' },
+    root_dir = lspconfig.util.find_git_ancestor,
+    single_file_support = true,
+  },
+}
+
+lspconfig.solidity.setup {}
+
 
 for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
   local default_diagnostic_handler = vim.lsp.handlers[method]
