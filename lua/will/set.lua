@@ -12,7 +12,7 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile =true
+vim.opt.undofile = true
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -23,3 +23,19 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+
+
+-- Set colorcolumn=80 for specific filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "rust", "solidity" },
+  callback = function()
+    vim.opt_local.colorcolumn = "100"
+  end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "yaml", "markdown" },
+  callback = function()
+    vim.opt_local.colorcolumn = "80"
+  end
+})
